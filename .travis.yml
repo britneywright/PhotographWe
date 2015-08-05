@@ -1,5 +1,7 @@
 language: ruby
 script: 'true'
+rvm:
+  - 2.1.0
 deploy:
   provider: heroku
   api_key:
