@@ -20,4 +20,27 @@ RSpec.describe UsersController do
       expect(response).to render_template :new
     end
   end
+
+  describe 'POST #create' do
+    context "with valid attributes" do
+      it "saves the new user in the database" do
+        expect{
+          post :create, user: attributes_for(:user)
+        }.to change(User, :count).by(1)
+      end
+    end
+
+    context "with invalid attributes" do
+      it "does not save the new user in the database" do
+        expect{
+          post :create, user: attributes_for(:user, username: nil)
+        }.to_not change(User, :count)
+      end
+
+      it "redirects to root" do
+        post :create, user: attributes_for(:user, username: nil)
+        expect(response).to redirect_to root_path
+      end
+    end
+  end
 end
