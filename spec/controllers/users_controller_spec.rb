@@ -8,4 +8,16 @@ RSpec.describe UsersController do
       expect(response).to render_template :show
     end
   end
+
+  describe 'GET #new' do
+    it 'assigns a new User to @user' do
+      get :new
+      expect(assigns(:user)).to be_a_new(User)
+    end
+
+    it 'renders the :new template' do
+      get :new
+      expect(response).to render_template :new
+    end
+  end
 end
