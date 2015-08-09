@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: photographwe_development
+
+test:
+  <<: *default
+  database: photographwe_test
+
+production:
+  <<: *default
+  database: photographwe_production
+  username: photographwe
+  password: <%= ENV['PHOTOGRAPHWE_DATABASE_PASSWORD']
