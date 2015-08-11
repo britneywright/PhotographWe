@@ -1,5 +1,10 @@
 class AlbumsController < ApplicationController
   before_action :set_album, only: [:show, :edit, :update, :destroy]
+
+  def index
+    @albums = Albums.find_by(user_id: params[:user_id])
+  end
+
   def show
   end
 
@@ -21,9 +26,17 @@ class AlbumsController < ApplicationController
   end
 
   def update
+    if @album.update
+      redirect_to @album, notice: "Album updated successfully."
+    else
+      flash[:errors] = @album.errors.full_messages
+      render :edit
+    end
   end
 
   def destroy
+    @album.destroy
+    rediret_to root_path, notice: "Album successfully destroyed"
   end
 
   private
