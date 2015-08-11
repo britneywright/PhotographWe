@@ -1,13 +1,10 @@
 class AlbumsController < ApplicationController
   before_action :set_album, only: [:show, :edit, :update, :destroy]
-<<<<<<< HEAD
-=======
 
   def index
     @albums = Albums.find_by(user_id: params[:user_id])
   end
 
->>>>>>> start albums controller
   def show
   end
 
