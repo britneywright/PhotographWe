@@ -46,10 +46,6 @@ class AlbumsController < ApplicationController
   end
 
   def set_album
-    params.require(:album).permit(:name,:description,:private_album,:secret_key)
-  end
-
-  def set_ablum
     @album = Album.find_by(id: params[:id])
   end
 end
