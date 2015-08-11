@@ -1,4 +1,4 @@
-class AlbumController < ApplicationController
+class AlbumsController < ApplicationController
   before_action :set_album, only: [:show, :edit, :update, :destroy]
   def show
   end
