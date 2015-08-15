@@ -12,35 +12,40 @@ RSpec.describe AlbumsController do
 
   describe 'GET #new' do
     it 'assigns a new album to @album' do
-      get :new
+      user = create(:user)
+      get :new, user_id: user.id
       expect(assigns(:album)).to be_a_new(Album)
     end
 
     it 'renders the :new template' do
-      get :new
-      expect(response).to render_template :new
+       user = create(:user)
+      get :new, user_id: user.id
+      expect(response).to render_template :new_user_album
     end
   end
 
   describe 'POST #create' do
     context "with valid attributes" do
       it "saves the new album in the database" do
+        user = create(:user)
         expect{
-          post :create, album: attributes_for(:album)
+          post :create, album: attributes_for(:album), user_id: user.id
         }.to change(Album, :count).by(1)
       end
     end
 
     context "with invalid attributes" do
       it "does not save the new album in the database" do
+        user = create(:user)
         expect{
-          post :create, album: attributes_for(:album, name: nil)
+          post :create, album: attributes_for(:album, name: nil), user_id: user.id
         }.to_not change(Album, :count)
       end
 
       it "renders the new template" do
-        post :create, album: attributes_for(:album, name: nil)
-        expect(response).to render_template :new
+        user = create(:user)
+        post :create, album: attributes_for(:album, name: nil), user_id: user.id
+        expect(response).to render_template :new, user_id: user.id
       end
     end
   end
