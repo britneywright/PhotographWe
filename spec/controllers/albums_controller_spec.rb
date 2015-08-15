@@ -3,8 +3,9 @@ require 'rails_helper'
 RSpec.describe AlbumsController do
   describe 'GET #show' do
     it "renders the :show template" do
-      album = create(:album)
-      get :show, id: album
+      user = create(:user)
+      album = create(:album, user: user)
+      get :show, id: album, user_id: user.id
       expect(response).to render_template :show
     end
   end
@@ -37,7 +38,7 @@ RSpec.describe AlbumsController do
         }.to_not change(Album, :count)
       end
 
-      it "redirects to root" do
+      it "renders the new template" do
         post :create, album: attributes_for(:album, name: nil)
         expect(response).to render_template :new
       end

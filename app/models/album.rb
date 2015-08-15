@@ -1,4 +1,5 @@
 class Album < ActiveRecord::Base
+  belongs_to :user
   validates :name, presence: true
   with_options if: :private_album? do |album|
     album.validates :secret_key, presence: true
