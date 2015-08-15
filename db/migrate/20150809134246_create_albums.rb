@@ -5,6 +5,7 @@ class CreateAlbums < ActiveRecord::Migration
       t.string :description
       t.boolean :private_album
       t.string :secret_key
+      t.integer :user_id, null: false
 
       t.timestamps null: false
     end

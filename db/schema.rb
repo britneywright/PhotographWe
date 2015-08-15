@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20150809134246) do
     t.string   "description"
     t.boolean  "private_album"
     t.string   "secret_key"
+    t.integer  "user_id",       null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
