@@ -36,16 +36,16 @@ RSpec.describe User do
   end
 
   it "is invalid without a unique username" do
-    create(:user)
-    user = build(:user, username: "janedog", email: "test@example.com")
-    expect(user).to be_invalid
-    expect(user.errors[:username]).to include("has already been taken")
+    first_user = create(:user)
+    second_user = build(:user, username: first_user.username, email: "test@example.com")
+    expect(second_user).to be_invalid
+    expect(second_user.errors[:username]).to include("has already been taken")
   end
 
   it "is invalid without a unique email address" do
-    create(:user)
-    user = build(:user, email: "janedog@example.com", username: "johndoe")
-    expect(user).to be_invalid
-    expect(user.errors[:email]).to include("has already been taken")
+    first_user = create(:user)
+    second_user = build(:user, email: first_user.email, username: "johndoe")
+    expect(second_user).to be_invalid
+    expect(second_user.errors[:email]).to include("has already been taken")
   end
 end
