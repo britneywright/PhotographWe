@@ -11,6 +11,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0'
 gem 'bcrypt', '~> 3.1.7'
 gem 'faker'
+gem "paperclip", "~> 4.3"
 
 group :development, :test do
   gem 'byebug'
@@ -25,4 +26,5 @@ group :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'selenium-webdriver'
+  gem 'shoulda-matchers'
 end
