@@ -1,6 +1,7 @@
 class AlbumsController < ApplicationController
   before_action :set_album, only: [:show, :edit, :update, :destroy]
-
+  before_action :require_logged_in_user, only: [:new]
+  before_action :require_authenticated_user, only: [:create, :edit, :update, :destroy]
   def index
     @albums = Albums.find_by(user_id: params[:user_id])
   end

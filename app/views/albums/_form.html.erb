@@ -1,0 +1,11 @@
+<%= form_for album do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.label :description %>
+  <%= f.text_area :description %>
+  <%= f.label :private_album %>
+  <%= f.check_box :private_album %>
+  <%= f.label :secret_key %>
+  <%= f.text_field :secret_key %>
+  <%= f.submit "Create album" %>
+<% end %>
