@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
   root 'static_pages#index'
 
-  resources :users do
-    resources :albums
-  end
+  resources :users
 
   resources :albums do
     resources :photographs
