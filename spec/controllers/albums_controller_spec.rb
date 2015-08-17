@@ -18,7 +18,7 @@ RSpec.describe AlbumsController do
     end
 
     it 'renders the :new template' do
-       user = create(:user)
+      user = create(:user)
       get :new, user_id: user.id
       expect(response).to render_template :new
     end
