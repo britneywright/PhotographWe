@@ -1,3 +1,9 @@
 <%= @album.name %>
 <%= @album.user.username %>
 <%= @album.photographs.count %>
+
+
+<% @album.photographs.each do |photo| %>
+  <div class="thumbnail"><%= image_tag photo.source.url(:medium) %></div>
+<% end %>
+<div><%= link_to "Add photos", upload_album_photographs_path(@album) %></div>
