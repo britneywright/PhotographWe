@@ -1,7 +1,7 @@
 class AlbumsController < ApplicationController
-  before_action :set_album, only: [:show, :edit, :update, :destroy]
+  before_action :set_album, only: [:show, :edit, :update, :upload, :create_photos, :destroy]
   before_action :require_logged_in_user, only: [:new]
-  before_action :require_authenticated_user, only: [:create, :edit, :update, :destroy]
+  before_action :require_authenticated_user, only: [:edit, :destroy]
   def index
     @albums = Albums.find_by(user_id: params[:user_id])
   end
@@ -17,6 +17,12 @@ class AlbumsController < ApplicationController
     album = Album.new(album_params)
     album.user = current_user
     if album.save
+      byebug
+      if params[:photographs]
+        params[:photographs].each do |source|
+          album.photographs.create(source: source)
+        end
+      end
       redirect_to album, notice: "Album created successfully!"
     else
       flash[:errors] = album.errors.full_messages
@@ -44,7 +50,7 @@ class AlbumsController < ApplicationController
   private
 
   def album_params
-    params.require(:album).permit(:name, :description, :private_album, :secret_key)
+    params.require(:album).permit(:name, :description, :private_album, :secret_key, photographs_attributes: [:source])
   end
 
   def set_album
