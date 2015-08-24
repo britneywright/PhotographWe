@@ -1,0 +1,12 @@
+<%= form_for @album, :url => update_submission_album_photographs_path do |f| %>
+  <% @photographs.each do |photo| %>
+    <div>
+      <%= image_tag photo.source.url(:medium) %>
+        <%= fields_for "photographs[]", photo do |pf| %>
+          <%= pf.label :caption %>
+          <%= pf.text_field :caption %>
+        <% end %>
+    </div>
+  <% end %>
+  <%= f.submit "Save Message" %>
+<% end %>

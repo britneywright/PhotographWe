@@ -1,2 +1,3 @@
-<%= image_tag @photograph.source.url(:medium) %>
-<div><%= @photograph.caption %></div>
+<%= render partial: 'photograph', locals: {photograph: @photograph} %>
+<%= link_to "Edit", edit_album_photograph_path(@album, @photograph) %>
+<%= link_to "Delete Photo", album_photograph_path(@album, @photograph), method: :delete %>

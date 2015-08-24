@@ -1,0 +1,10 @@
+<%= image_tag @photograph.source.url(:medium) %>
+<%= @photograph.caption %>
+
+<%= form_for ([@album, @photograph]) do |f| %>
+  <%= f.label :caption %>
+  <%= f.text_field :caption %>
+  <%= f.submit "Update Photo" %>
+<% end %>
+
+<%= link_to "Delete Photo", album_photograph_path(@album, @photograph), method: :delete %>
