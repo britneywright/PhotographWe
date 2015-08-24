@@ -1,9 +1,16 @@
-<%= @album.name %>
+<div class="album-details">
+<h2><%= @album.name %></h2>
 <%= @album.user.username %>
 <%= @album.photographs.count %>
+</div>
 
-
-<% @album.photographs.each do |photo| %>
-  <div class="thumbnail"><%= image_tag photo.source.url(:medium) %></div>
-<% end %>
-<div><%= link_to "Add photos", upload_album_photographs_path(@album) %></div>
+<div class="photographs"%>
+  <% @album.photographs.each do |photograph| %>
+    <%= render partial: 'photographs/photograph', locals: {photograph: photograph} %>
+    <div class="photo-options">
+      <%= link_to "Edit", edit_album_photograph_path(@album,photograph) %>
+      <%= link_to "Delete Photo", album_photograph_path(@album, photograph), method: :delete %>
+    </div>
+  <% end %>
+  <div><%= link_to "Add photos", upload_album_photographs_path(@album) %></div>
+</div>
