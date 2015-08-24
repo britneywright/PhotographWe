@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def authenticated_user
+    current_user == @album.user
+  end
+
   def require_authenticated_user(user)
     unless current_user?(user)
       flash[:error] = ["You don't have access to this page"]
