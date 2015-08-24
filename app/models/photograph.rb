@@ -7,4 +7,12 @@ class Photograph < ActiveRecord::Base
   validates :album, presence: true
   validates_attachment_content_type :source, :content_type => /\Aimage\/.*\Z/
   validates :source, :attachment_presence => true
+
+  def uploaded_by
+    if uploader
+      "#{uploader.first_name} #{uploader.last_name}"
+    else
+      "Guest"
+    end
+  end
 end
