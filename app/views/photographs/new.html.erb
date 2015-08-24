@@ -1,0 +1,14 @@
+<h2><%= @album.name %> - New Photo</h2>
+<div class="new-photograph">
+  <%= form_for ([@album,@photograph]) do |f| %>
+    <div class="form-field">
+      <%= f.label :source %>
+      <%= f.file_field :source %>
+    </div>
+    <div class="form-field">    
+      <%= f.label :caption %>
+      <%= f.text_field :caption %>
+    </div>
+    <%= f.submit %>
+  <% end %>
+</div>

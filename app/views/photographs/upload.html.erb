@@ -1,0 +1,11 @@
+<h2><%= @album.name %></h2>
+<div class="main-upload">
+  <h3>Upload Photos</h3>
+  <div class="upload-photos">
+  <%= form_for @album, :url => add_album_photographs_path, :html => { :class => 'form-horizontal', multipart: true } do |f| %>
+      <%= f.label :photographs %>
+      <%= file_field_tag "photographs[]", type: :file, multiple: true %>
+    <%= f.submit "Upload photos" %>
+  <% end %>
+  </div>
+</div>

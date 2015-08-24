@@ -1,0 +1,6 @@
+<h2><%= @album.name %></h2>
+<%= form_for @album, url: {action: 'grant_access'} do |f| %>
+  <%= f.label :secret_key %>
+  <%= text_field_tag "album#{@album.id}" %>
+  <%= f.submit "Access Album" %>
+<% end %>

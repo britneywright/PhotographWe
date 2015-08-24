@@ -17,10 +17,18 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def authenticated_user
+    current_user == @album.user
+  end
+
   def require_authenticated_user(user)
     unless current_user?(user)
       flash[:error] = ["You don't have access to this page"]
       redirect_to root_path
     end
   end
+
+  def photo_ids_string
+    @photographs.to_s.gsub(/\[|\]\s/,"")
+  end  
 end

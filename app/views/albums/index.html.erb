@@ -1,0 +1,7 @@
+<h2>Your Albums</h2>
+<% @albums.each do |album| %>
+  <li><%= link_to album.name, album %><%= album.private_status %></li>
+<% end %>
+<div>
+  <%= link_to "Add a new album", new_album_path %>
+</div>
