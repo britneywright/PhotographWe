@@ -1,3 +1,4 @@
+<h2>Personalize Your Photos</h2>
 <%= form_for @album, :url => update_submission_album_photographs_path do |f| %>
   <% @photographs.each do |photo| %>
     <div>
@@ -8,5 +9,5 @@
         <% end %>
     </div>
   <% end %>
-  <%= f.submit "Save Message" %>
+  <%= f.submit "Save Messages" %>
 <% end %>
