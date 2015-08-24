@@ -49,15 +49,11 @@ class PhotographsController < ApplicationController
   end
 
   def set_album
-    @album = Album.find_by(id: params[:album_id])
+    @album = Album.find_by(slug: params[:album_id])
   end
 
   def set_photograph
     @photograph = Photograph.find_by(id: params[:id])
-  end
-
-  def photo_ids_string
-    @photographs.to_s.gsub(/\[|\]\s/,"")
   end
 
   def photo_ids_array

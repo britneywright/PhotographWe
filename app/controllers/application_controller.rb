@@ -23,4 +23,8 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end
+
+  def photo_ids_string
+    @photographs.to_s.gsub(/\[|\]\s/,"")
+  end  
 end
