@@ -8,6 +8,8 @@ Rails.application.routes.draw do
       collection do
         get 'upload' => 'photographs#upload'
         patch 'add' => 'photographs#add'
+        get 'personalize/:list' => 'photographs#personalize', as: 'personalize'
+        patch 'update_submission' => 'photographs#update_submission'
       end
     end
   end

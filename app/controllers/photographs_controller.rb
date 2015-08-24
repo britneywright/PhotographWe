@@ -1,39 +1,44 @@
 class PhotographsController < ApplicationController
-  def show
-    @album = Album.find_by(id: params[:album_id])
+  before_action :set_album
+  before_action :set_photograph, only: [:show, :edit, :update, :delete]
+
+  def update
+    @photograph.update(photograph_params)
+    redirect_to @album
+  end
+
+  def destroy
+    @album = Album.find_by(id: params[:album_id])    
     @photograph = Photograph.find_by(id: params[:id])
-  end
-
-  def new
-    @album = Album.find_by(id: params[:album_id])
-    @photograph = Photograph.new
-  end
-
-  def create
-    album = Album.find_by(id: params[:album_id])
-    photograph = album.photographs.new(photograph_params)
-    if current_user
-      photograph.uploader = current_user
-    end
-    if photograph.save
-      redirect_to album_photograph_path(album.id, photograph.id)
-    else
-      flash[:errors] = photograph.errors.full_messages
-      redirect_to album
-    end
-  end
-
-  def upload
-    @album = Album.find_by(id: params[:album_id])
+    @photograph.delete
+    redirect_to @album
   end
 
   def add
-    @album = Album.find_by(id: params[:album_id])
+    @photographs = []
     if params[:photographs]
       params[:photographs].each do |source|
-        @album.photographs.create(source: source)
+        photograph = Photograph.new(source: source, album: @album)
+        if current_user
+          photograph.uploader = current_user
+        end
+        if photograph.save
+          @photographs << photograph.id
+        end
       end
     end
+    redirect_to personalize_album_photographs_path(@album,photo_ids_string)
+  end
+
+  def personalize
+    @photographs = []
+    photo_ids_array.each do |photo|
+      @photographs << Photograph.find_by(id: photo.to_i)
+    end
+  end
+
+  def update_submission
+    Photograph.update(params[:photographs].keys, params[:photographs].values)
     redirect_to @album
   end
 
@@ -41,5 +46,21 @@ class PhotographsController < ApplicationController
 
   def photograph_params
     params.require(:photograph).permit(:source, :caption)
+  end
+
+  def set_album
+    @album = Album.find_by(id: params[:album_id])
+  end
+
+  def set_photograph
+    @photograph = Photograph.find_by(id: params[:id])
+  end
+
+  def photo_ids_string
+    @photographs.to_s.gsub(/\[|\]\s/,"")
+  end
+
+  def photo_ids_array
+    params[:list].split(",")
   end
 end
