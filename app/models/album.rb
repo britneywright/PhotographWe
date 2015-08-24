@@ -13,7 +13,12 @@ class Album < ActiveRecord::Base
   def to_param
     slug
   end 
-  
+
+  def private_status
+    if self.private_album
+      " - private"
+    end
+  end
   protected
 
   def set_slug
