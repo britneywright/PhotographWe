@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :users, path_names: { new: 'signup' }
 
   resources :albums do
+    get 'access' => 'albums#access'
+    patch 'grant_access' => 'albums#grant_access'
     resources :photographs do
       collection do
         get 'upload' => 'photographs#upload'

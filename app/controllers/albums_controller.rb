@@ -2,11 +2,30 @@ class AlbumsController < ApplicationController
   before_action :set_album, only: [:show, :edit, :update, :upload, :destroy]
   before_action :require_logged_in_user, only: [:new]
   before_action :require_authenticated_user, only: [:edit, :destroy]
+
   def index
-    @albums = Albums.find_by(user_id: params[:user_id])
+    @albums = Album.where(user_id: current_user.id)
   end
 
   def show
+    if @album.private_album? && !authorized
+      redirect_to album_access_path(@album)
+    end
+  end
+
+  def access
+    @album = Album.find_by(slug: params[:album_id])
+  end
+
+  def grant_access
+    @album = Album.find_by(slug: params[:album_id])
+    session["album#{@album.id}".to_sym] = params["album#{@album.id}".to_sym]
+    if authorized
+      redirect_to @album
+    else
+      flash[:errors] = ["Invalid Key"]
+      redirect_to root_path
+    end
   end
 
   def new
@@ -24,8 +43,8 @@ class AlbumsController < ApplicationController
           if current_user
             photograph.uploader = current_user
           end
-          if photo.save
-            @photographs << photo.id
+          if photograph.save
+            @photographs << photograph.id
           end
         end
         redirect_to personalize_album_photographs_path(album,photo_ids_string)
@@ -36,9 +55,6 @@ class AlbumsController < ApplicationController
       flash[:errors] = album.errors.full_messages
       render :new
     end
-  end
-
-  def edit
   end
 
   def update
@@ -63,5 +79,9 @@ class AlbumsController < ApplicationController
 
   def set_album
     @album = Album.find_by(slug: params[:id])
+  end
+
+  def authorized
+    authenticated_user || session["album#{@album.id}".to_sym] == @album.secret_key
   end
 end
