@@ -12,6 +12,7 @@ gem 'sdoc', '~> 0.4.0'
 gem 'bcrypt', '~> 3.1.7'
 gem 'faker'
 gem "paperclip", "~> 4.3"
+gem "bower-rails"
 
 group :development, :test do
   gem 'byebug'
